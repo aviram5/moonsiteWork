@@ -2,30 +2,35 @@ import React from 'react';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const CategoryItem = ({itemData: category, itemSize, m}) => {
+const ArticleItem = ({itemData, itemSize, m}) => {
   const navigation = useNavigation();
-  console.log('itemSize: ', itemSize);
-  console.log('m: ', m);
   return (
     <TouchableOpacity
-      key={category}
+      key={itemData.key}
       onPress={() => {
-        navigation.navigate('Category', {category});
+        navigation.navigate('Article', {article: itemData});
       }}
       style={{
         backgroundColor: '#2d2d2d',
         width: itemSize,
-        height: itemSize,
         margin: m,
         borderWidth: 1,
         borderColor: 'rgba(100,100,100,100)',
+        height: itemSize,
         flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         borderRadius: 10,
       }}>
-      <Text style={{fontSize: 24, fontWeight: '800', color: '#7e7e7e'}}>
-        {category}
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: '800',
+          color: '#7e7e7e',
+          marginVertical: 4,
+        }}>
+        {itemData.title}
+      </Text>
+      <Text style={{fontSize: 14, fontWeight: '800', color: '#7e7e7e'}}>
+        {itemData.author ? `By ${itemData.author}` : 'No Author'}
       </Text>
     </TouchableOpacity>
   );
@@ -33,4 +38,4 @@ const CategoryItem = ({itemData: category, itemSize, m}) => {
 
 const styles = StyleSheet.create({});
 
-export default CategoryItem;
+export default ArticleItem;

@@ -1,42 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 
 const List = ({data, numColumns = 1, RenderItem}) => {
+  const [listWidth, setListWidth] = useState(0);
+  const marginValue = 0.025;
+
+  useEffect(() => {
+    console.log('data: ', data);
+  });
   return (
     <FlatList
+      onLayout={e => {
+        const {width} = e.nativeEvent.layout;
+        setListWidth(width);
+      }}
       data={data}
       numColumns={numColumns}
-      keyExtractor={item => item.key}
       renderItem={({item}) => {
         return (
-          <TouchableOpacity
-            // onPress={() => {
-            //   navigation.navigate('Category', {category});
-            // }}
-            style={{
-              backgroundColor: '#2d2d2d',
-              width: '45%',
-              margin: '2.5%',
-              borderWidth: 1,
-              borderColor: 'rgba(100,100,100,100)',
-              height: 200,
-              // height: listWidth / 2,
-              flexGrow: 1,
-              borderRadius: 10,
-            }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: '800',
-                color: '#7e7e7e',
-                marginVertical: 4,
-              }}>
-              {item.title}
-            </Text>
-            <Text style={{fontSize: 14, fontWeight: '800', color: '#7e7e7e'}}>
-              {item.author ? `By ${item.author}` : 'No Author'}
-            </Text>
-          </TouchableOpacity>
+          <RenderItem
+            itemData={item}
+            itemSize={Math.floor(
+              listWidth / numColumns - listWidth * marginValue - 10,
+            )}
+            m={Math.floor(listWidth * marginValue)}
+          />
         );
       }}
     />
