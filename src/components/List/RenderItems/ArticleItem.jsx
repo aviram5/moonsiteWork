@@ -13,12 +13,13 @@ const ArticleItem = ({itemData, itemSize, m}) => {
       style={{
         backgroundColor: '#2d2d2d',
         width: itemSize,
+        minHeight: itemSize,
         margin: m,
         borderWidth: 1,
         borderColor: 'rgba(100,100,100,100)',
-        height: itemSize,
         flexGrow: 1,
         borderRadius: 10,
+        padding: 2,
       }}>
       <Text
         style={{
@@ -26,10 +27,19 @@ const ArticleItem = ({itemData, itemSize, m}) => {
           fontWeight: '800',
           color: '#7e7e7e',
           marginVertical: 4,
-        }}>
+          textAlign: 'center',
+        }}
+        ellipsizeMode="tail"
+        numberOfLines={2}>
         {itemData.title}
       </Text>
-      <Text style={{fontSize: 14, fontWeight: '800', color: '#7e7e7e'}}>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: '800',
+          color: '#7e7e7e',
+          textAlign: 'center',
+        }}>
         {itemData.author ? `By ${itemData.author}` : 'No Author'}
       </Text>
     </TouchableOpacity>

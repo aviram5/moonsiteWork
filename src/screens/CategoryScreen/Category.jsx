@@ -11,9 +11,6 @@ const Category = () => {
     params: {category},
   } = useRoute();
   const {data, isLoading, isError} = useFetchArticlesQuery(category);
-  useEffect(() => {
-    console.log('dada', data);
-  });
 
   if (isLoading) {
     return (

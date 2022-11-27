@@ -5,9 +5,6 @@ const List = ({data, numColumns = 1, RenderItem}) => {
   const [listWidth, setListWidth] = useState(0);
   const marginValue = 0.025;
 
-  useEffect(() => {
-    console.log('data: ', data);
-  });
   return (
     <FlatList
       onLayout={e => {

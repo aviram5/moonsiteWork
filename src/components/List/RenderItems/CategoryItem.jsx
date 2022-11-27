@@ -4,8 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const CategoryItem = ({itemData: category, itemSize, m}) => {
   const navigation = useNavigation();
-  console.log('itemSize: ', itemSize);
-  console.log('m: ', m);
+
   return (
     <TouchableOpacity
       key={category}
@@ -15,7 +14,7 @@ const CategoryItem = ({itemData: category, itemSize, m}) => {
       style={{
         backgroundColor: '#2d2d2d',
         width: itemSize,
-        height: itemSize,
+        minHeight: itemSize,
         margin: m,
         borderWidth: 1,
         borderColor: 'rgba(100,100,100,100)',
@@ -23,6 +22,9 @@ const CategoryItem = ({itemData: category, itemSize, m}) => {
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
+        elevation: 8,
+        shadowColor: '#000',
+        shadowRadius: 10,
       }}>
       <Text style={{fontSize: 24, fontWeight: '800', color: '#7e7e7e'}}>
         {category}

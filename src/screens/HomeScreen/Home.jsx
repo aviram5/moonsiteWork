@@ -15,9 +15,11 @@ const categories = [
 
 const Home = () => {
   return (
-    <View style={{flex: 1, backgroundColor: '#0e0e0e'}}>
-      <Text>Home</Text>
-      <List RenderItem={CategoryItem} data={categories} numColumns={3} />
+    <View style={{flex: 1}}>
+      <Text style={{fontSize: 24, fontWeight: '800', alignSelf: 'center'}}>
+        Please select a category
+      </Text>
+      <List RenderItem={CategoryItem} data={categories} numColumns={2} />
     </View>
   );
 };
