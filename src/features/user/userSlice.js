@@ -13,8 +13,9 @@ export const userSlice = createSlice({
     },
     removeFavorite: (state, {payload}) => {
       const removeIndex = state.favorites.findIndex(
-        favorite => favorite.id === payload.id,
+        item => item.key === payload.key,
       );
+      console.log(removeIndex);
       state.favorites.splice(removeIndex, 1);
     },
   },
