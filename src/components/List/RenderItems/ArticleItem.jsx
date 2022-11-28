@@ -3,7 +3,7 @@ import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {setCurrentArticle} from 'src/features/user/userSlice';
-
+import commonListItemStyle from './common.style';
 const ArticleItem = ({itemData, itemSize, m}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -14,17 +14,12 @@ const ArticleItem = ({itemData, itemSize, m}) => {
         dispatch(setCurrentArticle(itemData));
         navigation.navigate('Article');
       }}
-      style={{
-        backgroundColor: '#2d2d2d',
-        width: itemSize,
-        minHeight: itemSize,
-        margin: m,
-        borderWidth: 1,
-        borderColor: 'rgba(100,100,100,100)',
-        flexGrow: 1,
-        borderRadius: 10,
-        padding: 8,
-      }}>
+      style={[
+        commonListItemStyle.itemContainer(itemSize, m),
+        {
+          padding: 8,
+        },
+      ]}>
       <Text
         style={{
           fontSize: 18,
