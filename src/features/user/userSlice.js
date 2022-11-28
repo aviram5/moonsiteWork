@@ -1,57 +1,33 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {getCartsByChunk, getUser, updateCartItemAmount} from '../../firebase';
-
-export const loadUser = createAsyncThunk('users/loadUser', async () => {
-  return await getUser();
-});
-
-export const getCarts = createAsyncThunk(
-  'users/getCarts',
-  async ({lastLoadedCartId = null} = parameters) => {
-    return getCartsByChunk(lastLoadedCartId);
-  },
-);
-
-export const updateCartItems = createAsyncThunk(
-  'users/updateCartItems',
-  async ({updatedItems}) => {
-    return updateCartItems(updatedItems);
-  },
-);
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  numberOfCarts: 0,
-  cartsList: {
-    carts: [],
-    lastLoadedCartId: null,
-  },
+  favorites: [],
+  currentArticle: {},
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    initialLoad: (state, {payload}) => {
-      state.numberOfCarts = payload.numberOfCarts;
+    addFavorite: state => {
+      state.currentArticle.isFavorite = true;
+      state.favorites.push(state.currentArticle);
     },
-  },
-  extraReducers: {
-    [getCarts.rejected]: state => {
-      console.log('-getCarts-REJECTED');
+    removeFavorite: state => {
+      state.currentArticle.isFavorite = false;
+      const removeIndex = state.favorites.findIndex(
+        item => item.key === state.currentArticle.key,
+      );
+      console.log(removeIndex);
+      state.favorites.splice(removeIndex, 1);
     },
-    [getCarts.fulfilled]: (state, {payload}) => {
-      state.cartsList.carts = [...state.cartsList.carts, ...payload.cartsList];
-      state.cartsList.lastLoadedCartId = payload.lastLoadedCartId;
-    },
-    [loadUser.rejected]: state => {
-      console.log('-loadUser-REJECTED');
-    },
-    [loadUser.fulfilled]: (state, {payload}) => {
-      state.numberOfCarts = payload.numberOfCarts;
+    setCurrentArticle: (state, {payload}) => {
+      state.currentArticle = payload;
     },
   },
 });
 
-export const {initialLoad} = userSlice.actions;
+export const {addFavorite, removeFavorite, setCurrentArticle} =
+  userSlice.actions;
 
 export default userSlice.reducer;

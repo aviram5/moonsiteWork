@@ -1,9 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
-// import userReducer from './features/user/userSlice';
+import {ariclesApiSlice} from './features/articles/articlesApiSlice';
+import userReducer from './features/user/userSlice';
 
 export const store = configureStore({
   reducer: {
-    // user: userReducer,
+    user: userReducer,
+    [ariclesApiSlice.reducerPath]: ariclesApiSlice.reducer,
   },
-  middleware: getDefaultMiddleware => [...getDefaultMiddleware()],
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware().concat(ariclesApiSlice.middleware);
+  },
 });
