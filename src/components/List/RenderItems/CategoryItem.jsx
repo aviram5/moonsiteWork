@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import commonListItemStyle from './common.style';
+import commonTextStyle from 'src/styles/commonText.style';
 
 const CategoryItem = ({itemData: category, itemSize, m}) => {
   const navigation = useNavigation();
@@ -19,9 +20,7 @@ const CategoryItem = ({itemData: category, itemSize, m}) => {
           alignItems: 'center',
         },
       ]}>
-      <Text style={{fontSize: 24, fontWeight: '800', color: '#7e7e7e'}}>
-        {category}
-      </Text>
+      <Text style={commonTextStyle.textL}>{category}</Text>
     </TouchableOpacity>
   );
 };

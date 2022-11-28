@@ -1,8 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-
-//move key to env
-const API_KEY = '26e9382884c83cb85bf6760c490ac6bf';
-const BASE_URL = `http://api.mediastack.com/v1/`;
+import {API_KEY, BASE_URL} from 'src/config/apiConfig';
 
 export const ariclesApiSlice = createApi({
   reducerPath: 'articles',
@@ -19,7 +16,7 @@ export const ariclesApiSlice = createApi({
             access_key: API_KEY,
           },
         }),
-        transformResponse: (response, meta, arg) => {
+        transformResponse: response => {
           return response.data.map(item => ({
             ...item,
             key: `${Math.random() * 1000}`,
