@@ -29,6 +29,9 @@ const Category = () => {
 
   return (
     <View style={{flex: 1}}>
+      <Text style={{fontSize: 24, fontWeight: '800', alignSelf: 'center'}}>
+        Please select an article
+      </Text>
       <List RenderItem={ArticleItem} data={data} numColumns={2} />
     </View>
   );

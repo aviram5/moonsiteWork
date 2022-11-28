@@ -10,6 +10,7 @@ const CustomIcon = ({name, size = 30, color = '#000'}) => {
 
 const Tabs = createBottomTabNavigator();
 const HomeNavigator = createStackNavigator();
+const FavoriteNavigator = createStackNavigator();
 
 const HomeStack = () => {
   return (
@@ -18,6 +19,14 @@ const HomeStack = () => {
       <HomeNavigator.Screen name="Category" component={Category} />
       <HomeNavigator.Screen name="Article" component={Article} />
     </HomeNavigator.Navigator>
+  );
+};
+const FavoriteStack = () => {
+  return (
+    <FavoriteNavigator.Navigator initialRouteName="Favorites">
+      <FavoriteNavigator.Screen name="Favorites" component={Favorites} />
+      <FavoriteNavigator.Screen name="Article" component={Article} />
+    </FavoriteNavigator.Navigator>
   );
 };
 
@@ -38,8 +47,8 @@ const AppNavigator = () => {
         }}
       />
       <Tabs.Screen
-        name="Favorites"
-        component={Favorites}
+        name="FavoriteStack"
+        component={FavoriteStack}
         options={{
           tabBarIcon: ({color, size}) => (
             <CustomIcon {...{color, size, name: 'star'}} />

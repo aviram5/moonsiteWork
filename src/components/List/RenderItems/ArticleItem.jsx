@@ -1,14 +1,18 @@
 import React from 'react';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {setCurrentArticle} from 'src/features/user/userSlice';
 
 const ArticleItem = ({itemData, itemSize, m}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <TouchableOpacity
       key={itemData.key}
       onPress={() => {
-        navigation.navigate('Article', {article: itemData});
+        dispatch(setCurrentArticle(itemData));
+        navigation.navigate('Article');
       }}
       style={{
         backgroundColor: '#2d2d2d',
@@ -46,7 +50,9 @@ export const AuthorNameWrapper = ({authorName}) => {
         fontWeight: '800',
         color: '#7e7e7e',
         textAlign: 'center',
-      }}>
+      }}
+      ellipsizeMode="tail"
+      numberOfLines={2}>
       {authorName ? `By ${authorName}` : 'No Author Available'}
     </Text>
   );

@@ -23,6 +23,7 @@ export const ariclesApiSlice = createApi({
           return response.data.map(item => ({
             ...item,
             key: `${Math.random() * 1000}`,
+            isFavorite: false,
           }));
         },
       }),

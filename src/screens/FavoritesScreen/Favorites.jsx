@@ -12,9 +12,10 @@ import ArticleItem from 'src/components/List/RenderItems/ArticleItem';
 const Favorites = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [isSignedIn, setIsSignIn] = useState(false);
-  const userState = useSelector(state => state.user);
+  const {favorites} = useSelector(state => state.user);
 
   useEffect(() => {
+    console.log(favorites);
     GoogleSignin.configure();
   }, []);
 
@@ -28,6 +29,16 @@ const Favorites = () => {
       setIsSignIn(isSigned);
     })();
   });
+
+  const signOut = async () => {
+    try {
+      await GoogleSignin.signOut();
+      setIsSignIn(false);
+      setUserInfo(null); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const signIn = async () => {
     try {
@@ -51,26 +62,58 @@ const Favorites = () => {
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Favorites</Text>
       {isSignedIn ? (
         <View>
-          <Text>{userInfo.user.name} Welcome to your favorites articles</Text>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: '800',
+              // alignSelf: 'center',
+              textAlign: 'center',
+              marginTop: 10,
+              marginBottom: 30,
+            }}>
+            {userInfo.user.name} Welcome to your favorite articles
+          </Text>
           <View style={{flex: 1}}>
-            <List
-              RenderItem={ArticleItem}
-              data={userState.favorites}
-              numColumns={2}
-            />
+            {favorites.length > 0 ? (
+              <List RenderItem={ArticleItem} data={favorites} numColumns={2} />
+            ) : (
+              <View style={{marginTop: '50%'}}>
+                <Text
+                  style={{
+                    marginTop: 10,
+                    fontSize: 20,
+                    fontWeight: '800',
+                    // alignSelf: 'center',
+                    textAlign: 'center',
+                  }}>
+                  No Article Added To Favorites yet
+                </Text>
+              </View>
+            )}
+            <Button title="signOut" onPress={signOut} />
           </View>
         </View>
       ) : (
-        <GoogleSigninButton
-          style={{width: 192, height: 48}}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={signIn}
-          // disabled={this.state.isSigninInProgress}
-        />
+        <View style={{alignItems: 'center'}}>
+          <Text
+            style={{
+              marginBottom: 10,
+              fontSize: 20,
+              fontWeight: '800',
+              textAlign: 'center',
+            }}>
+            Please signin to see your favorite articles
+          </Text>
+          <GoogleSigninButton
+            style={{width: 192, height: 48}}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={signIn}
+            // disabled={this.state.isSigninInProgress}
+          />
+        </View>
       )}
     </View>
   );
